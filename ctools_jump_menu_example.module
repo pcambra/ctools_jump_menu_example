@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function ctools_jump_menu_example_menu() {
+  $items = array();
+
+  $items['ctools_jump_menu_example/jump_menu/%'] = array(
+    'title' => 'Jump menu example',
+    'description' => 'Description',
+    'access callback' => TRUE,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ctools_jump_menu_example_jump_menu_page'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+function ctools_jump_menu_example_jump_menu_page($form, &$form_state) {
+  $form = array();
+  $form['text'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Your textfield'),
+    '#default_value' => check_plain(arg(2)),
+  );
+  $targets = array(
+    '/ctools_jump_menu_example/jump_menu/one' => t('One'),
+    '/ctools_jump_menu_example/jump_menu/two' => t('Two'),
+    '/ctools_jump_menu_example/jump_menu/three' => t('Three'),
+  );
+  $options = array(
+    'title' => t('Jump menu'),
+    'default_value' => '/ctools_jump_menu_example/jump_menu/' . check_plain(arg(2)),
+  );
+  ctools_include('jump-menu');
+  $form['jump_menu'] = drupal_get_form('ctools_jump_menu', $targets, $options);
+
+  return $form;
+}
+

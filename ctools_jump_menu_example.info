@@ -1,0 +1,3 @@
+name = CTools jump menu example module
+core = 7.x
+dependencies[] = ctools
